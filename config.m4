@@ -11,6 +11,8 @@ PHP_ARG_ENABLE(redis-session, whether to enable sessions,
 PHP_ARG_ENABLE(redis-igbinary, whether to enable igbinary serializer support,
 [  --enable-redis-igbinary      Enable igbinary serializer support], no, no)
 
+PHP_ARG_ENABLE(redis-lzf, whether to enable lzf compression,
+[  --enable-redis-lzf       Enable lzf compression support], no, no)
 
 if test "$PHP_REDIS" != "no"; then
 
@@ -57,6 +59,14 @@ dnl Check for igbinary
     PHP_ADD_INCLUDE($IGBINARY_EXT_DIR)
   else
     IGBINARY_INCLUDES=""
+    AC_MSG_RESULT([disabled])
+  fi
+
+  AC_MSG_CHECKING([for redis lzf support])
+  if test "$PHP_REDIS_LZF" != "no"; then
+    AC_MSG_RESULT([enabled])
+    AC_DEFINE(HAVE_REDIS_LZF, 1, [Whether redis lzf compression is enabled])
+  else
     AC_MSG_RESULT([disabled])
   fi
 

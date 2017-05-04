@@ -2962,6 +2962,8 @@ void redis_getoption_handler(INTERNAL_FUNCTION_PARAMETERS,
     switch(option) {
         case REDIS_OPT_SERIALIZER:
             RETURN_LONG(redis_sock->serializer);
+        case REDIS_OPT_COMPRESSION:
+            RETURN_LONG(redis_sock->compression);
         case REDIS_OPT_PREFIX:
             if(redis_sock->prefix) {
                 RETURN_STRINGL(redis_sock->prefix, redis_sock->prefix_len);
@@ -3002,6 +3004,17 @@ void redis_setoption_handler(INTERNAL_FUNCTION_PARAMETERS,
 #endif
             ) {
                 redis_sock->serializer = val_long;
+                RETURN_TRUE;
+            }
+            break;
+        case REDIS_OPT_COMPRESSION:
+            val_long = atol(val_str);
+            if (val_long == REDIS_COMPRESSION_NONE
+#ifdef HAVE_REDIS_LZF
+                || val_long == REDIS_COMPRESSION_LZF
+#endif
+            ) {
+                redis_sock->compression = val_long;
                 RETURN_TRUE;
             }
             break;
