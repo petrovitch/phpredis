@@ -344,9 +344,6 @@ static const zend_module_dep redis_deps[] = {
 #ifdef HAVE_REDIS_IGBINARY
      ZEND_MOD_REQUIRED("igbinary")
 #endif
-#ifdef HAVE_REDIS_LZF
-     ZEND_MOD_REQUIRED("lzf")
-#endif
      ZEND_MOD_END
 };
 

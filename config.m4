@@ -11,8 +11,8 @@ PHP_ARG_ENABLE(redis-session, whether to enable sessions,
 PHP_ARG_ENABLE(redis-igbinary, whether to enable igbinary serializer support,
 [  --enable-redis-igbinary      Enable igbinary serializer support], no, no)
 
-PHP_ARG_ENABLE(redis-lzf, whether to enable lzf compression,
-[  --enable-redis-lzf       Enable lzf compression support], no, no)
+PHP_ARG_WITH(redis-lzf, whether to enable lzf compression,
+[  --with-redis-lzf       Enable lzf compression support], no, no)
 
 if test "$PHP_REDIS" != "no"; then
 
@@ -62,12 +62,11 @@ dnl Check for igbinary
     AC_MSG_RESULT([disabled])
   fi
 
-  AC_MSG_CHECKING([for redis lzf support])
   if test "$PHP_REDIS_LZF" != "no"; then
-    AC_MSG_RESULT([enabled])
-    AC_DEFINE(HAVE_REDIS_LZF, 1, [Whether redis lzf compression is enabled])
-  else
-    AC_MSG_RESULT([disabled])
+    PHP_ADD_INCLUDE(liblzf)
+    PHP_ADD_BUILD_DIR(liblzf)
+    lzf_sources="liblzf/lzf_c.c liblzf/lzf_d.c"
+    AC_DEFINE(HAVE_REDIS_LZF, 1, [ ])
   fi
 
   dnl # --with-redis -> check with-path
@@ -109,5 +108,5 @@ dnl Check for igbinary
   dnl
   dnl PHP_SUBST(REDIS_SHARED_LIBADD)
 
-  PHP_NEW_EXTENSION(redis, redis.c redis_commands.c library.c redis_session.c redis_array.c redis_array_impl.c redis_cluster.c cluster_library.c, $ext_shared)
+  PHP_NEW_EXTENSION(redis, redis.c redis_commands.c library.c redis_session.c redis_array.c redis_array_impl.c redis_cluster.c cluster_library.c $lzf_sources, $ext_shared)
 fi

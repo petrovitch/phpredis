@@ -29,8 +29,7 @@ addons:
 before_install:
   - phpize
   - pecl install igbinary
-  - echo no | pecl install lzf
-  - ./configure --enable-redis-igbinary --enable-redis-lzf CFLAGS=-Wall
+  - ./configure --enable-redis-igbinary --with-redis-lzf CFLAGS=-Wall
 install: make install
 before_script:
   - gem install redis
