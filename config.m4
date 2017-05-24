@@ -3,16 +3,16 @@ dnl config.m4 for extension redis
 
 PHP_ARG_ENABLE(redis, whether to enable redis support,
 dnl Make sure that the comment is aligned:
-[  --enable-redis           Enable redis support])
+[  --enable-redis          Enable redis support])
 
 PHP_ARG_ENABLE(redis-session, whether to enable sessions,
-[  --disable-redis-session      Disable session support], yes, no)
+[  --disable-redis-session Disable session support], yes, no)
 
 PHP_ARG_ENABLE(redis-igbinary, whether to enable igbinary serializer support,
-[  --enable-redis-igbinary      Enable igbinary serializer support], no, no)
+[  --enable-redis-igbinary Enable igbinary serializer support], no, no)
 
-PHP_ARG_WITH(redis-lzf, whether to enable lzf compression,
-[  --with-redis-lzf       Enable lzf compression support], no, no)
+PHP_ARG_ENABLE(redis-lzf, whether to enable lzf compression,
+[  --enable-redis-lzf      Enable lzf compression support], no, no)
 
 if test "$PHP_REDIS" != "no"; then
 
